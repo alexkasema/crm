@@ -43,6 +43,7 @@
                         <td> {{employee.city}} </td>
                         <td> {{employee.country}} </td>
                         <td> {{employee.creation_date}} </td>
+                        <td> <a href="{% url 'employee' employee.id %}">View {{employee.first_name}}</a></td>
 
                 
                     </tr>

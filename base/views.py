@@ -72,6 +72,44 @@ def create_employee(request):
     context = {'form': form}
     return render(request, 'base/create-record.html', context)
 
+@login_required(login_url='login')
+def update_employee(request, pk):
+    
+    employee = Staff.objects.get(id=pk)
+
+    form = UpdateEmployeeForm(instance=employee)
+
+    if request.method == 'POST':
+
+        form = UpdateEmployeeForm(request.POST, instance=employee)
+
+        if form.is_valid():
+
+            form.save()
+
+            return redirect('dashboard')
+    
+    context = {'form': form, 'employee': employee}
+    return render(request, 'base/update-record.html', context)
+
+#! Read / view an employee record
+@login_required(login_url='login')
+def view_employee(request, pk):
+    
+    employee = Staff.objects.get(id=pk)
+
+    context = {'employee': employee}
+    return render(request, 'base/view-record.html',context)
+
+@login_required(login_url='login')
+def delete_employee(request, pk):
+
+    employee = Staff.objects.get(id=pk)
+
+    employee.delete()
+
+    return redirect('dashboard')
+
 
 
 
