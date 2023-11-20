@@ -1,8 +1,11 @@
 from django.shortcuts import render, redirect
-from . forms import CreateUserForm, LoginForm
+from . forms import CreateUserForm, LoginForm, CreateEmployeeForm, UpdateEmployeeForm
 
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
+from .models import Staff
+ 
 # Create your views here.
 
 def home(request):
@@ -41,9 +44,39 @@ def userLogin(request):
 
             if user is not None:
                 login(request, user)
-                #return redirect('')
+                return redirect('dashboard')
     context = {'form': form}
     return render(request, 'base/login.html', context)
+
+@login_required(login_url='login')
+def dashboard(request):
+
+    employees = Staff.objects.all()
+
+    context = {'employees': employees}
+    return render(request, 'base/dashboard.html', context)
+
+
+@login_required(login_url='login')
+def create_employee(request):
+
+    form = CreateEmployeeForm()
+
+    if request.method == 'POST':
+        form = CreateEmployeeForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            return redirect('dashboard')
+    
+    context = {'form': form}
+    return render(request, 'base/create-record.html', context)
+
+
+
+
+
+
 
 def userLogout(request):
 
