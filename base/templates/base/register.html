@@ -17,10 +17,16 @@
 
             <form action="" method="post" autocomplete="off">
                 {% csrf_token %}
-                {{form|crispy}}
+                {{form.username|as_crispy_field}}
+                <br>
+                {{form.password1|as_crispy_field}}
+                <br>
+                {{form.password2|as_crispy_field}}
                 <br>
 
-                <button class="btn btn-primary w-100 btn-block p-2" type="submit">Create Account</button>
+                <button class="btn btn-primary w-100 btn-block p-2" type="submit">
+                    Create Account &nbsp; <i class="fa fa-sign-in" aria-hidden="true"></i>
+                </button>
 
             </form>
 

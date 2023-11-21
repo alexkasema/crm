@@ -2,7 +2,7 @@
 
 {% block content %}
 
-    <h3>Welcome to the Dashboard {{user}}</h3>
+    <h3>Welcome to the Dashboard {{user}} 👋</h3>
     <hr>
 
     <a class="btn btn-outline-primary btn-sm" href="{% url 'create' %}">Add a new Employee</a>
@@ -43,7 +43,10 @@
                         <td> {{employee.city}} </td>
                         <td> {{employee.country}} </td>
                         <td> {{employee.creation_date}} </td>
-                        <td> <a href="{% url 'employee' employee.id %}">View {{employee.first_name}}</a></td>
+                        <td> <a class="btn btn-success btn-sm" href="{% url 'employee' employee.id %}">
+                            <i class="fa fa-eye" aria-hidden="true"></i>
+                            </a>
+                        </td>
 
                 
                     </tr>

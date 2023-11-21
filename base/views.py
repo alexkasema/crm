@@ -4,6 +4,8 @@ from . forms import CreateUserForm, LoginForm, CreateEmployeeForm, UpdateEmploye
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
+from django.contrib import messages #! for flash messages
+
 from .models import Staff
  
 # Create your views here.
@@ -22,7 +24,7 @@ def register(request):
 
         if form.is_valid():
             form.save()
-
+            messages.success(request, "Account created successfully")
             return redirect('login')
 
     context = {'form': form}
@@ -44,6 +46,7 @@ def userLogin(request):
 
             if user is not None:
                 login(request, user)
+                messages.success(request, "Welcome")
                 return redirect('dashboard')
     context = {'form': form}
     return render(request, 'base/login.html', context)
@@ -67,6 +70,9 @@ def create_employee(request):
 
         if form.is_valid():
             form.save()
+
+            messages.success(request, "Employee Record Created")
+
             return redirect('dashboard')
     
     context = {'form': form}
@@ -86,6 +92,8 @@ def update_employee(request, pk):
         if form.is_valid():
 
             form.save()
+
+            messages.success(request, "Record Updated")
 
             return redirect('dashboard')
     
@@ -108,6 +116,8 @@ def delete_employee(request, pk):
 
     employee.delete()
 
+    messages.success(request, "Employee Record deleted successfully")
+
     return redirect('dashboard')
 
 
@@ -119,4 +129,7 @@ def delete_employee(request, pk):
 def userLogout(request):
 
     logout(request)
+
+    messages.success(request, "Logout success")
+
     return redirect('login')

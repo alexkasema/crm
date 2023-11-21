@@ -8,6 +8,7 @@
     <title>Lex Corp</title>
     <link rel="stylesheet" type="text/css" href="https://bootswatch.com/5/flatly/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
     <!-- Create nav bar here -->
@@ -16,6 +17,13 @@
     <div class="container">
         <br>
         <!-- Notification messages -->
+        {% for message in messages %}
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                <p id="message-timer" class="alert alert-success text-center float-center message-text">
+                    <i class="fa fa-check-square" aria-hidden="true"></i> &nbsp; {{message}}
+                </p>
+            {% endif %}
+        {% endfor %}
 
         {% block content %}
 
